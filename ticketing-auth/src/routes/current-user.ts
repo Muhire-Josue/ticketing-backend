@@ -4,4 +4,4 @@ router.get('/api/user/currentuser', () => {
 
 });
 
-export { router as currentuser };
+export { router as currentUserRouter };
