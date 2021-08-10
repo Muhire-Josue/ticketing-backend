@@ -13,7 +13,8 @@ router.post(
   (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      // return res.status(400).json({ errors: errors.array() });
+      throw new Error('Email or password invalid');
     }
     return res.json({ msg: "Signup" });
   }
