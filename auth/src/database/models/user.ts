@@ -1,41 +1,47 @@
 import {
-  Sequelize,
   DataTypes,
+  Model,
 } from "sequelize";
-require('dotenv').config();
-
-const {
-  DEV_DB_USERNAME,
-  DEV_DB_PASSWORD,
-  DEV_DB_NAME,
-  DEV_DB_HOSTNAME,
-  DEV_DB_DIALECT,
-  DEV_DB_PORT,
-} = process.env;
+import { sequelize } from './index';
 
 
-const sequelize = new Sequelize(`
-${DEV_DB_DIALECT}://${DEV_DB_USERNAME}:${DEV_DB_PASSWORD}@${DEV_DB_HOSTNAME}:${DEV_DB_PORT}/${DEV_DB_NAME}
-`);
+class User extends Model {
+  public id!: number;
+  public name!: string;
+  public description!: string;
 
-const User = sequelize.define(
-  'User',
+  public readonly created_at!: Date;
+  public readonly updated_at!: Date;
+
+  public readonly user?: User;
+
+}
+
+User.init(
   {
     id: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
       autoIncrement: true,
       primaryKey: true,
+      type: DataTypes.INTEGER,
     },
     email: {
-      type: new DataTypes.STRING(64),
-      defaultValue: 'Unnamed Note',
+      allowNull: false,
+      type: DataTypes.STRING,
+      unique: true
     },
     password: {
-      type: new DataTypes.STRING(4096),
-      allowNull: false,
-    },
+      type: DataTypes.STRING
+    }
   },
   {
+    sequelize,
     tableName: 'users',
-  }
-);
+    underscored: true,
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  },
+)
+
+ export default User;

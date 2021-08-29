@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import { RequestValidationError } from "../errors/request-validation-error";
 import { DatabaseConnectionError } from "../errors/database-connection-error";
-import { User } from '../database/models/index'
+import User from '../database/models/user'
 
 const router = express.Router();
 
@@ -21,11 +21,11 @@ router.post(
     if (!errors.isEmpty()) {
       throw new RequestValidationError(errors.array());
     }
-
+    const user = await User.create(req.body)
     console.log("Creating a user...");
-    throw new DatabaseConnectionError();
+    // throw new DatabaseConnectionError();
 
-    res.send({});
+    res.status(201).send({data: user});
   }
 );
 
