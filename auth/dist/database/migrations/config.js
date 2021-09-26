@@ -1,3 +1,5 @@
+"use strict";
+
 require('dotenv').config();
 
 const {
@@ -17,7 +19,6 @@ const {
   PROD_DB_HOSTNAME,
   PROD_DB_PORT
 } = process.env;
-
 module.exports = {
   development: {
     username: DEV_DB_USERNAME,
@@ -25,7 +26,7 @@ module.exports = {
     database: DEV_DB_NAME,
     host: DEV_DB_HOSTNAME,
     port: DEV_DB_PORT,
-    dialect: 'postgres',
+    dialect: 'postgres'
   },
   test: {
     username: TEST_DB_USERNAME,
@@ -43,12 +44,12 @@ module.exports = {
     host: PROD_DB_HOSTNAME,
     port: PROD_DB_PORT,
     dialect: 'postgres'
-  },
-  // username: process.env.DEV_DB_USERNAME,
+  } // username: process.env.DEV_DB_USERNAME,
   // password: process.env.DEV_DB_PASSWORD,
   // database: process.env.DEV_DB_NAME,
   // host: process.env.DEV_DB_HOSTNAME,
   // port: process.env.DEV_DB_PORT,
   // dialect: 'postgres',
   // logging: false
+
 };

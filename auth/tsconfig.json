@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "module": "commonjs",
+    "module": "es6",
     "sourceMap": true,
     "outDir": "./build",
     "strict": true,
@@ -13,7 +13,6 @@
     "typeRoots": ["node_modules/@types", "./src/types"],
     "resolveJsonModule": true,
     "baseUrl": "./",
-    "allowJs": true,
     "paths": {
       "helpers/*": ["src/helpers/*"],
       "constants/*": ["src/constants/*"],
@@ -22,16 +21,14 @@
       "resources/*": ["src/resources/*"],
       "v1/*": ["src/resources/api/v1/*"],
       "middlewares/*": ["src/middlewares/*"],
-      "polyglot": ["src/polyglot"],
-      "polyglot/*": ["src/polyglot/*"],
+      "locales/*": ["src/locales/*"],
       "emails/*": ["src/emails/*"],
       "tests/*": ["src/tests/*"],
       "swagger/*": ["src/swagger/*"],
       "events/*": ["src/events/*"],
-      "scripts/*": ["src/scripts/*"],
     }
   },
   "lib": ["es2015"],
-  "include": ["src/**/*", "provinces copy.ts", "../website/constants/metaKeywords.ts"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }

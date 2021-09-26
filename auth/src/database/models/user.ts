@@ -36,7 +36,7 @@ User.init(
   },
   {
     sequelize,
-    tableName: 'users',
+    tableName: 'Users',
     underscored: true,
     timestamps: true,
     createdAt: 'created_at',

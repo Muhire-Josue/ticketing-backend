@@ -1,8 +1,5 @@
-require('dotenv').config();
-
-console.log(`==========>>>>>`, process.env.DATABASE_URL);
 const common = {
-  use_env_variable: process.env.DATABASE_URL,
+  use_env_variable: 'DATABASE_URL',
   dialect: 'postgres',
   logging: false,
   seederStorage: 'sequelize',
@@ -12,9 +9,9 @@ const common = {
     acquire: 60000,
     idle: 10000,
   }
-};
+}
 
-module.exports = {
+const config = {
   development: {
     ...common,
   },
@@ -29,3 +26,5 @@ module.exports = {
     ...common,
   },
 };
+module.exports = config;
+export default config;

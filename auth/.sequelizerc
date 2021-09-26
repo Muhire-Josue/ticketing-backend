@@ -1,10 +1,11 @@
+require('@babel/register');
 require("dotenv").config();
 const path = require("path");
 
 const databasePath = path.join(__dirname, "src", "database");
 
 module.exports = {
-  config: path.join(databasePath, "config", "config.js"),
+  config: path.join(databasePath, "config", "config.ts"),
   "models-path": path.join(databasePath, "models"),
   "migrations-path": path.join(databasePath, "migrations"),
 };
