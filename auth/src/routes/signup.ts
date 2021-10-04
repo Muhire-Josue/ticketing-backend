@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import bcrypt from 'bcrypt';
 import { body, validationResult } from "express-validator";
 import { RequestValidationError } from "../errors/request-validation-error";
 import jwt from "jsonwebtoken";
@@ -17,7 +18,7 @@ router.post(
   ],
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
-    const { passoword, email } = req.body;
+    const { password, email } = req.body;
 
     if (!errors.isEmpty()) {
       throw new RequestValidationError(errors.array());
@@ -26,7 +27,8 @@ router.post(
     if(userExists){
       return res.status(409).send({error: 'User already exists'})
     }
-    const user = await User.create(req.body);
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    const user = await User.create({email, hashedPassword});
     const token = jwt.sign({ id: user.id, email }, "secret");
     res.status(201).send({ data: user, token });
   }
