@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import { RequestValidationError } from "../errors/request-validation-error";
-import { DatabaseConnectionError } from "../errors/database-connection-error";
-import User from '../database/models/user'
+import jwt from "jsonwebtoken";
+import User from "../database/models/user";
 
 const router = express.Router();
 
@@ -17,15 +17,18 @@ router.post(
   ],
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
+    const { passoword, email } = req.body;
 
     if (!errors.isEmpty()) {
       throw new RequestValidationError(errors.array());
     }
-    const user = await User.create(req.body)
-    console.log("Creating a user...");
-    // throw new DatabaseConnectionError();
-
-    res.status(201).send({data: user});
+    const userExists = await User.findOne({ where: { email } });
+    if(userExists){
+      return res.status(409).send({error: 'User already exists'})
+    }
+    const user = await User.create(req.body);
+    const token = jwt.sign({ id: user.id, email }, "secret");
+    res.status(201).send({ data: user, token });
   }
 );
 
