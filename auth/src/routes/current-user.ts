@@ -1,7 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 const router = express.Router();
-router.get('/api/user/currentuser', (req, res) => {
+router.get('/api/users/current', (req, res) => {
   const bearerHeader = req.headers.authorization;
   if (bearerHeader === undefined) {
     return res.status(401).send({error: 'Token Undefined'});
