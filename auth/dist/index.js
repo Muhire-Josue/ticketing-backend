@@ -14,9 +14,9 @@ var _signout = require("./routes/signout");
 
 var _signup = require("./routes/signup");
 
-var _errorHandler = require("./middlewares/error-handler");
+var _errorHandler = require("../src/middlewares/error-handler");
 
-var _notFoundError = require("./errors/not-found-error");
+var _notFoundError = require("../src/errors/not-found-error");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30,6 +30,6 @@ app.all('*', async (req, res) => {
   throw new _notFoundError.NotFoundError();
 });
 app.use(_errorHandler.errorHandler);
-app.listen(3000, () => {
-  console.log('Listening on port 3000!!!!!!!!');
+app.listen(4000, () => {
+  console.log('Listening on port 4000!!!!!!!!');
 });

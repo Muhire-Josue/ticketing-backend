@@ -15,6 +15,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const env = process.env.NODE_ENV || 'development';
 const config = _config2.default[env];
+// const {use_env_variable, ...restConfig} = config;
 const sequelize = new _sequelize.Sequelize(process.env[config.use_env_variable], config);
 exports.sequelize = sequelize;
 const db = {

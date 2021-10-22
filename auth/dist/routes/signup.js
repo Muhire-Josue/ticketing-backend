@@ -7,9 +7,13 @@ exports.signupRouter = void 0;
 
 var _express = _interopRequireDefault(require("express"));
 
+var _bcrypt = _interopRequireDefault(require("bcrypt"));
+
 var _expressValidator = require("express-validator");
 
 var _requestValidationError = require("../errors/request-validation-error");
+
+var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
 var _user = _interopRequireDefault(require("../database/models/user"));
 
@@ -23,15 +27,41 @@ router.post("/api/users/signup", [(0, _expressValidator.body)("email").isEmail()
   max: 20
 }).withMessage("Password must be between 4 and 20 characters")], async (req, res) => {
   const errors = (0, _expressValidator.validationResult)(req);
+  const {
+    password,
+    email
+  } = req.body;
 
   if (!errors.isEmpty()) {
     throw new _requestValidationError.RequestValidationError(errors.array());
   }
 
-  const user = await _user.default.create(req.body);
-  console.log("Creating a user..."); // throw new DatabaseConnectionError();
+  const userExists = await _user.default.findOne({
+    where: {
+      email
+    }
+  });
+
+  if (userExists) {
+    return res.status(409).send({
+      error: "User already exists"
+    });
+  }
+
+  const hashedPassword = _bcrypt.default.hashSync(password, 10);
+
+  const user = await _user.default.create({
+    email,
+    hashedPassword
+  });
+
+  const token = _jsonwebtoken.default.sign({
+    id: user.id,
+    email
+  }, "secret");
 
   res.status(201).send({
-    data: user
+    data: user,
+    token
   });
 });

@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 import { body, validationResult } from "express-validator";
 import { RequestValidationError } from "../errors/request-validation-error";
 import jwt from "jsonwebtoken";
@@ -24,11 +24,11 @@ router.post(
       throw new RequestValidationError(errors.array());
     }
     const userExists = await User.findOne({ where: { email } });
-    if(userExists){
-      return res.status(409).send({error: 'User already exists'})
+    if (userExists) {
+      return res.status(409).send({ error: "User already exists" });
     }
     const hashedPassword = bcrypt.hashSync(password, 10);
-    const user = await User.create({email, hashedPassword});
+    const user = await User.create({ email, hashedPassword });
     const token = jwt.sign({ id: user.id, email }, "secret");
     res.status(201).send({ data: user, token });
   }

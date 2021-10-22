@@ -1,5 +1,9 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
 const common = {
   use_env_variable: 'DATABASE_URL',
   dialect: 'postgres',
@@ -12,7 +16,7 @@ const common = {
     idle: 10000
   }
 };
-module.exports = {
+const config = {
   development: { ...common
   },
   test: { ...common,
@@ -23,3 +27,6 @@ module.exports = {
   production: { ...common
   }
 };
+module.exports = config;
+var _default = config;
+exports.default = _default;
